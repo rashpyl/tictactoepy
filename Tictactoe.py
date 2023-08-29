@@ -136,15 +136,15 @@ def minimax(board, depth, is_maximizing):
 
 
 # AI's move
-def ai_move():
+def ai_move(moves):
     best_move = None
     best_score = -float("inf")
-
+    
     for row in range(3):
         for col in range(3):
             if board[row][col] == "":
                 board[row][col] = "O"
-                score = minimax(board, 0, False)
+                score = minimax(board, moves+1, False)
                 board[row][col] = ""  # Undo the move
 
                 if score > best_score:
@@ -155,6 +155,7 @@ def ai_move():
         row, col = best_move
         board[row][col] = "O"
         draw_o(row, col)
+
 
 # Main game loop
 def start_game():
@@ -189,7 +190,7 @@ def start_game():
                             running = False
 
                         if running and moves < 9:
-                            ai_move()  # AI's turn
+                            ai_move(moves)  # AI's turn
                             moves += 1
                             winner = check_for_winner()
 
